@@ -62,7 +62,7 @@
                 <h3 class="h3_home wow fadeIn" data-wow-delay="0.6s">e Brochure</h3>                
                 <ul class="list-inline intro-social-buttons">                  
                     <li id="download" >
-                        <a href="#downloadlink" class="btn btn-lg mybutton_standard wow swing wow fadeIn" data-wow-delay="1.2s">
+                        <a href="/apk/eBrochure.apk" class="btn btn-lg mybutton_standard wow swing wow fadeIn" data-wow-delay="1.2s">
                             <span class="network-name">
                                 <i class="fa fa-download"></i>
                                 Download Mobile App
