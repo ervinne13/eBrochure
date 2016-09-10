@@ -23,21 +23,18 @@
         <![endif]-->      
     </style>
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-image: url('/static-img/wall.jpg')">
     <div class="login-box">
-        <div class="login-logo">
-            <a href="#">
-                <h1>
-                    Forever Jo Trading
-                </h1>
-            </a>
-        </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
 
-            <h1>                    
-                <small>Sign in</small>
+            <h1 class="text-center">
+                Forever Jo Trading
             </h1>
+
+            <h3>                    
+                <small>Sign in</small>
+            </h3>
 
             <form action="{{url('/login')}}" method="POST">
                 {{ csrf_field() }}
@@ -70,8 +67,6 @@
                     <!-- /.col -->
                 </div>
             </form>
-
-            <a href="/register" class="text-center">Register</a>
         </div>
         <!-- /.login-box-body -->
     </div>

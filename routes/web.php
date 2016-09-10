@@ -17,6 +17,11 @@ Route::get('/', function () {
 
 Route::auth();
 
+Route::get('/logout', function() {
+    Auth::logout();
+    return redirect('/');
+});
+
 Route::get('/test/paypal', 'TestController@paypal');
 Route::get('/test/paypal/payment/{status}', 'TestController@payment');
 
