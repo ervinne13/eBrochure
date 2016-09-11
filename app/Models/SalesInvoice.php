@@ -15,4 +15,8 @@ class SalesInvoice extends Model {
         return $this->hasMany(SalesInvoiceDetail::class, 'sales_invoice_id');
     }
 
+    public function scopePaymentId($query, $paymentId) {
+        return $query->where('payment_token', $paymentId);
+    }
+
 }

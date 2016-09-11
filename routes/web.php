@@ -25,6 +25,8 @@ Route::get('/logout', function() {
 Route::get('/test/paypal', 'TestController@paypal');
 Route::get('/test/paypal/payment/{status}', 'TestController@payment');
 
+Route::get('/si/payment/{status}', 'SalesInvoicesController@paymentResult');
+
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('home', 'HomeController@index');

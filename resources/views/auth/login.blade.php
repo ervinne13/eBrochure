@@ -33,7 +33,7 @@
             </h1>
 
             <h3>                    
-                <small>Sign in</small>
+                <small>Log in</small>
             </h3>
 
             <form action="{{url('/login')}}" method="POST">
