@@ -7,8 +7,8 @@
         <ul class="sidebar-menu">
             <li>
                 <a href="/home">
-                    <span><i class="fa fa-dashboard text-aqua"></i> 
-                        Home / Dashboard
+                    <span><i class="fa fa-bar-chart text-aqua"></i> 
+                        Store Insights
                     </span>
                 </a>
             </li>

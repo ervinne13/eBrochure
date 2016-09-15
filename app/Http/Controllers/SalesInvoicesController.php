@@ -78,6 +78,11 @@ class SalesInvoicesController extends Controller {
 
             $si         = new SalesInvoice($requestAssoc);
             $si->status = "Awaiting Payment";
+
+            if ($si->discount) {
+                $si->applyDiscount();
+            }
+
             $si->save();
 
             $details = array();
@@ -98,6 +103,7 @@ class SalesInvoicesController extends Controller {
 
             unset($si->details);
             $si->payment_token = $paymentId;
+            $si->applyDiscount();
             $si->save();
 
             DB::commit();
@@ -140,16 +146,28 @@ class SalesInvoicesController extends Controller {
             array_push($items, $item);
         }
 
+        if ($si->discount) {
+            $si->revertDiscount();
+
+            $item = new Item();
+            $item->setName("Discount");
+            $item->setCurrency('PHP');
+            $item->setQuantity(1);
+            $item->setPrice($si->getActualDiscount() * -1);
+
+            array_push($items, $item);
+        }
+
         $itemList = new ItemList();
         $itemList->setItems($items);
 
         $details = new Details();
         $details->setShipping(0.00);
-        $details->setSubtotal($si->total_amount);
+        $details->setSubtotal($si->total_amount - $si->getActualDiscount());
 
         $amount = new Amount();
         $amount->setCurrency('PHP');
-        $amount->setTotal($si->total_amount);
+        $amount->setTotal($si->total_amount - $si->getActualDiscount());
         $amount->setDetails($details);
 
         $transaction = new Transaction();
@@ -176,6 +194,8 @@ class SalesInvoicesController extends Controller {
             $payment->create($paypalCtx);
             return $payment;
         } catch (\Exception $e) {
+            echo $e->getCode(); // Prints the Error Code
+            echo $e->getData(); // Prints the detailed error message 
             throw $e;
         }
     }
@@ -245,9 +265,16 @@ class SalesInvoicesController extends Controller {
 
             DB::beginTransaction();
 
-            $si           = SalesInvoice::find($id);
-            $si->status   = $request->status;
-            $si->discount = $request->discount;
+            $si         = SalesInvoice::find($id);
+            $si->status = $request->status;
+
+            //  revert discount then reapply
+            if ($si->discount != $request->discount) {
+                $si->revertDiscount();
+                $si->discount = $request->discount;
+                $si->applyDiscount();
+            }
+
             $si->save();
 
             DB::commit();

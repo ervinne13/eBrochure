@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Facades\Datatables;
 
 class UsersController extends Controller {
@@ -20,6 +22,14 @@ class UsersController extends Controller {
 
     public function datatable() {
         return Datatables::of(User::NonAdmin())->make(true);
+    }
+
+    public function login(Request $request) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            return Auth::user();
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -38,9 +48,21 @@ class UsersController extends Controller {
      * @return Response
      */
     public function store(Request $request) {
-        
-        
-        
+
+        try {
+            $user            = new User($request->toArray());
+//            $user->is_active = 0;
+            $user->api_token = str_random(60);
+            $user->password  = \Hash::make($request->password);
+            $user->role_code = "PREMIUM_USER";
+            $user->save();
+
+            return $user;
+        } catch (Exception $e) {
+            return response($e->getMessage(), 500);
+        }
+
+        return $request;
     }
 
     /**

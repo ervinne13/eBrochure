@@ -24,4 +24,5 @@ Route::group(['middleware' => 'cors'], function () {
     Route::post('/si', 'SalesInvoicesController@store');
 
     Route::post('/users/register', 'UsersController@store');
+    Route::post('/users/login', 'UsersController@login');
 });
