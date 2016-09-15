@@ -38,7 +38,9 @@ class UsersController extends Controller {
      * @return Response
      */
     public function store(Request $request) {
-        //
+        
+        
+        
     }
 
     /**

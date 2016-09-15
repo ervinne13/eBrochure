@@ -22,4 +22,6 @@ Route::group(['middleware' => 'cors'], function () {
     Route::get('/categories/{categoryId}/products', 'ProductsController@byCategory');
     Route::get('/pay', 'SalesInvoicesController@pay');
     Route::post('/si', 'SalesInvoicesController@store');
+
+    Route::post('/users/register', 'UsersController@store');
 });

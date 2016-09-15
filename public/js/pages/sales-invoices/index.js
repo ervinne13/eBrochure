@@ -12,6 +12,8 @@
 
     function initializeWS() {
 
+        console.log('Connecting to ws://' + noHttpBaseURL + ':' + globals.socketPort);
+
         WSConnection = new WebSocket('ws://' + noHttpBaseURL + ':' + globals.socketPort);
         WSConnection.onopen = function (e) {
             //  for checking
