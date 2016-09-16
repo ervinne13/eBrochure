@@ -28,7 +28,7 @@ class SalesInvoicesController extends Controller {
     protected $statusList = [
         "Open",
         "Awaiting Payment",
-        "Payment Confirmed ",
+        "Payment Confirmed",
         "Out of Stock",
         "Rejected",
         "Packaging",
