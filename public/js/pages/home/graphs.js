@@ -44,9 +44,21 @@
     }
 
     function initializeMonthlySales() {
+
+        var sales = [
+//            {monthLabel: "Jan", sales: 10},
+//            {monthLabel: "Feb", sales: 10},
+            {monthLabel: "Mar", monthIndex: 3, sales: 105},
+            {monthLabel: "Apr", monthIndex: 4, sales: 153},
+            {monthLabel: "May", monthIndex: 5, sales: 200},
+            {monthLabel: "Jun", monthIndex: 6, sales: 183},
+            {monthLabel: "Jul", monthIndex: 7, sales: 224},
+            {monthLabel: "Aug", monthIndex: 8, sales: 237}
+        ];
+
         var sin = [];
-        for (var i = 0; i < 14; i += 0.5) {
-            sin.push([i, Math.sin(i)]);
+        for (var i = 0; i < 6; i++) {
+            sin.push([sales[i].monthIndex, sales[i].sales]);
         }
         var line_data1 = {
             data: sin,
@@ -76,7 +88,21 @@
                 show: true,
             },
             xaxis: {
-                show: true
+                show: true,
+                ticks: [
+                    [1, "Jan"],
+                    [2, "Feb"],
+                    [3, "Mar"],
+                    [4, "Apr"],
+                    [5, "May"],
+                    [6, "Jun"],
+                    [7, "Jul"],
+                    [8, "Aug"],
+                    [9, "Sep"],
+                    [10, "Oct"],
+                    [11, "Nov"],
+                    [12, "Dec"]
+                ]
             }
         });
         //Initialize tooltip on hover
