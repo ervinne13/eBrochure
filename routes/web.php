@@ -26,6 +26,7 @@ Route::get('/test/paypal', 'TestController@paypal');
 Route::get('/test/paypal/payment/{status}', 'TestController@payment');
 
 Route::get('/si/payment/{status}', 'SalesInvoicesController@paymentResult');
+Route::get('/users/payment/{status}', 'UsersController@paymentResult');
 
 Route::group(['middleware' => 'auth'], function () {
 

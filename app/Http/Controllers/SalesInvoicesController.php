@@ -224,9 +224,10 @@ class SalesInvoicesController extends Controller {
             } catch (\Exception $e) {
                 return response($e->getMessage(), 500);
             }
+            return $result;
+        } else {
+            return "Cancelled";
         }
-
-        return $result;
     }
 
     /**

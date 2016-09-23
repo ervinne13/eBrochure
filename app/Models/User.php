@@ -34,5 +34,9 @@ class User extends Authenticatable {
     public function scopeNonAdmin($query) {
         return $query->where('role_code', '!=', Role::CODE_ADMIN);
     }
+    
+    public function scopePaymentId($query, $paymentId) {
+        return $query->where('payment_token', $paymentId);
+    }
 
 }

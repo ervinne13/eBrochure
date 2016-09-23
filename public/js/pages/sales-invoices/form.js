@@ -42,7 +42,7 @@
             success: function (response) {
                 console.log(response);
 
-                var contact = $('[name=contact]').val();                
+                var contact = $('[name=contact]').val();
 
                 if (contact) {
                     var notification = {
