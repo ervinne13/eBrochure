@@ -28,6 +28,7 @@ class SalesInvoicesController extends Controller {
     protected $statusList = [
         "Open",
         "Awaiting Payment",
+        "Cash on Delivery",
         "Payment Confirmed",
         "Out of Stock",
         "Rejected",
@@ -70,14 +71,16 @@ class SalesInvoicesController extends Controller {
      */
     public function store(Request $request) {
 
+        $withPaypal   = $request->withPaypal;
         $requestAssoc = $request->toArray();
 
         try {
 
             DB::beginTransaction();
 
-            $si         = new SalesInvoice($requestAssoc);
-            $si->status = "Awaiting Payment";
+            $si = new SalesInvoice($requestAssoc);
+
+            $si->status = $withPaypal ? "Awaiting Payment" : "Cash on Delivery";
 
             if ($si->discount) {
                 $si->applyDiscount();
@@ -97,12 +100,18 @@ class SalesInvoicesController extends Controller {
 
             $si->details = $details;
 
-            $payment    = $this->generatePayment($si);
-            $paymentUrl = $payment->getApprovalLink();
-            $paymentId  = $payment->getId();
+            $paymentUrl = null;
+            $paymentId  = null;
+            if ($withPaypal) {
+                $payment    = $this->generatePayment($si);
+                $paymentUrl = $payment->getApprovalLink();
+                $paymentId  = $payment->getId();
+
+                $si->payment_token = $paymentId;
+            }
 
             unset($si->details);
-            $si->payment_token = $paymentId;
+            $si->revertDiscount(); //revert first to ensure that we are getting correct computation
             $si->applyDiscount();
             $si->save();
 
