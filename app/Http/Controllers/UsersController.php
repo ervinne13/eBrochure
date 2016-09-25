@@ -7,6 +7,18 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
+use PayPal\Api\Amount;
+use PayPal\Api\Details;
+use PayPal\Api\Item;
+use PayPal\Api\ItemList;
+use PayPal\Api\Payer;
+use PayPal\Api\Payment;
+use PayPal\Api\PaymentExecution;
+use PayPal\Api\RedirectUrls;
+use PayPal\Api\Transaction;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Rest\ApiContext;
 use Yajra\Datatables\Facades\Datatables;
 
 class UsersController extends Controller {
@@ -141,7 +153,7 @@ class UsersController extends Controller {
             $user->password  = \Hash::make($request->password);
             $user->role_code = "PREMIUM_USER";
 
-            $payment    = $this->generatePayment($si);
+            $payment    = $this->generatePayment($user);
             $paymentUrl = $payment->getApprovalLink();
             $paymentId  = $payment->getId();
 
