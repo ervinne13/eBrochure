@@ -24,6 +24,10 @@ class ProductsController extends Controller {
         return view('pages.products.index');
     }
 
+    public function search($keyword) {
+        return Product::Keyword($keyword)->get();
+    }
+
     public function byCategory($categoryId) {
         if ($categoryId) {
             return Product::with('image')->categoryId($categoryId)->get();
@@ -65,14 +69,14 @@ class ProductsController extends Controller {
             $product = new Product($requestAssoc);
             $product->save();
 
-			if (array_key_exists("url", $requestAssoc)) {
-				$productImage             = new ProductImage();
-				$productImage->product_id = $product->id;
-				$productImage->sort_order = 1;
-				$productImage->url        = $requestAssoc["url"];
+            if (array_key_exists("url", $requestAssoc)) {
+                $productImage             = new ProductImage();
+                $productImage->product_id = $product->id;
+                $productImage->sort_order = 1;
+                $productImage->url        = $requestAssoc["url"];
 
-				$product->image()->save($productImage);
-			}
+                $product->image()->save($productImage);
+            }
 
             DB::commit();
 
@@ -124,14 +128,14 @@ class ProductsController extends Controller {
             $product->fill($requestAssoc);
             $product->save();
 
-			if (array_key_exists("url", $requestAssoc)) {
-				$productImage             = $product->image;
-				$productImage->sort_order = 1;
-				$productImage->url        = $requestAssoc["url"];
+            if (array_key_exists("url", $requestAssoc)) {
+                $productImage             = $product->image;
+                $productImage->sort_order = 1;
+                $productImage->url        = $requestAssoc["url"];
 
-				$product->image()->save($productImage);
-			}
-            
+                $product->image()->save($productImage);
+            }
+
             DB::commit();
 
             return $product;

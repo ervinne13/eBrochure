@@ -25,4 +25,7 @@ Route::group(['middleware' => 'cors'], function () {
 
     Route::post('/users/register', 'UsersController@store');
     Route::post('/users/login', 'UsersController@login');
+    
+    Route::get('/products/search/{keyword}', 'ProductsController@search');
+    
 });

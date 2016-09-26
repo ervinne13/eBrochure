@@ -9,6 +9,20 @@ class Product extends Model {
     protected $fillable = [
         "category_id", "model", "stock", "name", "price", "status", "description"
     ];
+    
+    public function scopeKeyword($query, $keyword) {
+
+        $where = array(strtolower("%{$keyword}%"));
+
+        return $query
+                        ->select(array('products.*', 'url AS image_url'))
+                        ->leftJoin('categories', 'category_id', '=', 'categories.id')
+                        ->leftJoin('product_images', 'product_id', '=', 'products.id')
+                        ->whereRaw('LOWER(products.name) like ?', $where)
+                        ->orWhereRaw('LOWER(products.description) like ?', $where)
+                        ->orWhereRaw('LOWER(categories.name) like ?', $where)
+        ;
+    }
 
     public function image() {
         //  first image only

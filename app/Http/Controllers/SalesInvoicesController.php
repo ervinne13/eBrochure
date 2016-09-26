@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\SalesInvoice;
 use App\Models\SalesInvoiceDetail;
 use Illuminate\Http\Request;
@@ -34,6 +35,7 @@ class SalesInvoicesController extends Controller {
         "Rejected",
         "Packaging",
         "For Pickup",
+        "For Delivery",
         "Fullfilled",
     ];
 
@@ -91,8 +93,15 @@ class SalesInvoicesController extends Controller {
             $details = array();
 
             foreach ($requestAssoc["details"] AS $detail) {
+                $product                    = Product::find($detail["product_id"]);
                 $siDetail                   = new SalesInvoiceDetail($detail);
                 $siDetail->sales_invoice_id = $si->id;
+
+                if ($product->stock == 0) {
+                     throw new Exception("$product->name is out of stock ");
+                } else  if ($product->stock - $detail["qty"] < 0) {
+                    throw new Exception("$product->name only has $product->stock left. Cannot order more.");
+                }
 
                 $siDetail->save();
                 array_push($details, $siDetail);
@@ -286,6 +295,14 @@ class SalesInvoicesController extends Controller {
             }
 
             $si->save();
+
+            if ($si->status == "For Pickup" || $si->status == "For Delivery" || $si->status == "Fullfilled") {
+                $details = $si->details;
+                foreach ($details AS $detail) {
+                    $detail->product->stock -= $detail->qty;
+                    $detail->product->save();
+                }
+            }
 
             DB::commit();
 
