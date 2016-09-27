@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="Others"/>
-        <group name="eBrochure">
+        <group name="WoF">
             <file>file:/C:/xampp/htdocs/others/eBrochure/app/Http/Controllers/SalesInvoicesController.php</file>
         </group>
-        <group name="WoF">
+        <group name="eBrochure">
+            <file>file:/C:/xampp/htdocs/others/eBrochure/routes/api.php</file>
+            <file>file:/C:/xampp/htdocs/others/eBrochure/app/Models/Product.php</file>
             <file>file:/C:/xampp/htdocs/others/eBrochure/app/Http/Controllers/SalesInvoicesController.php</file>
         </group>
     </open-files>
