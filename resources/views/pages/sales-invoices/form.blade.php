@@ -52,6 +52,10 @@
                                 <label>Discount</label>
                                 <input type="text" name="discount" class="form-control" value="{{ $si->discount }}">
                             </div>
+                            <div class="form-group">
+                                <label>Remarks</label>
+                                <textarea name="remarks" class="form-control">{{$si->remarks}}</textarea>
+                            </div>                            
                         </div>
                     </div>
                 </div>

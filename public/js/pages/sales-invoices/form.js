@@ -1,4 +1,6 @@
 
+/* global siId, globals */
+
 (function () {
 
     var noHttpBaseURL = utilities.trimPort(utilities.trimHttp(baseURL));
@@ -32,6 +34,7 @@
 
         var data = {
             status: $('[name=status]').val(),
+            remarks: $('[name=remarks]').val(),
             discount: $('[name=discount]').val()
         };
         $.ajax({
@@ -49,17 +52,22 @@
                         type: "NOTIFICATION_SALES_ORDER_UPDATED",
                         salesOrderId: siId,
                         contact: contact,
-                        status: $('[name=status]').val()
+                        status: $('[name=status]').val(),
+                        remarks: $('[name=remarks]').val()
                     };
-                    WSConnection.send(JSON.stringify(notification));
+                    try {
+                        WSConnection.send(JSON.stringify(notification));
+                    } catch (e) {
+                        console.error(e);
+                    }
                     console.log(notification);
                 }
 
-                swal("Success!", "Category Saved!", "success");
+                swal("Success!", "Sales Invoice Info Saved!", "success");
 //
-////                setTimeout(function () {
-////                    location.href = "/si";
-////                }, globals.reloadRedirectWaitTime);
+                setTimeout(function () {
+                    location.href = "/si";
+                }, globals.reloadRedirectWaitTime);
             }
         });
     }

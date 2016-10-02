@@ -286,6 +286,7 @@ class SalesInvoicesController extends Controller {
 
             $si         = SalesInvoice::find($id);
             $si->status = $request->status;
+            $si->remarks = $request->remarks;
 
             //  revert discount then reapply
             if ($si->discount != $request->discount) {
