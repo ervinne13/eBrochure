@@ -6,10 +6,6 @@
         <group name="WoF">
             <file>file:/C:/xampp/htdocs/others/eBrochure/app/Http/Controllers/SalesInvoicesController.php</file>
         </group>
-        <group name="eBrochure">
-            <file>file:/C:/xampp/htdocs/others/eBrochure/routes/api.php</file>
-            <file>file:/C:/xampp/htdocs/others/eBrochure/app/Models/Product.php</file>
-            <file>file:/C:/xampp/htdocs/others/eBrochure/app/Http/Controllers/SalesInvoicesController.php</file>
-        </group>
+        <group name="eBrochure"/>
     </open-files>
 </project-private>
