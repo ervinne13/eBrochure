@@ -297,7 +297,7 @@ class SalesInvoicesController extends Controller {
 
             $si->save();
 
-            if ($si->status == "For Pickup" || $si->status == "For Delivery" || $si->status == "Fullfilled") {
+            if ($si->status == "Payment Confirmed" || $si->status == "For Pickup" || $si->status == "For Delivery" || $si->status == "Fullfilled") {
                 $details = $si->details;
                 foreach ($details AS $detail) {
                     $detail->product->stock -= $detail->qty;
